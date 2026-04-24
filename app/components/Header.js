@@ -1,33 +1,76 @@
-import Link from "next/link";
+"use client";
 
-export default function Header({ variant = "home" }) {
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
+
+export default function Header({ variant = "default" }) {
+	const router = useRouter();
+	const pathname = usePathname();
+	const [isScrolled, setIsScrolled] = useState(false);
+
+	useEffect(() => {
+		const handleScroll = () => {
+			setIsScrolled(window.scrollY > 20);
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
+
+	function handleContactClick() {
+		if (pathname === "/") {
+			gsap.to(window, {
+				duration: 1.2,
+				scrollTo: { y: "#contact-section", offsetY: 40 },
+				ease: "power3.inOut",
+			});
+		} else {
+			router.push("/#contact-section");
+		}
+	}
+
 	return (
-		<nav className="border-b border-slate-200 bg-[#f7f3eb] sticky top-0 z-50">
-			<div className="max-w-7xl mx-auto px-6 py-6 flex flex-wrap items-center justify-between gap-4">
+		<header
+			className={`sticky top-0 z-50 transition-all duration-300 ${
+				isScrolled
+					? "bg-white/80 backdrop-blur-md shadow-sm py-4"
+					: "bg-transparent py-4 sm:py-6"
+			}`}
+		>
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between gap-3 sm:gap-4">
 				<Link
 					href="/"
-					className="text-2xl font-semibold tracking-tight text-slate-900"
+					className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight"
 				>
 					TerraData
 				</Link>
-				<div className="flex flex-wrap items-center gap-6 text-sm text-slate-600">
-					<Link href="/" className="hover:text-slate-900">
+				<nav className="hidden sm:flex items-center gap-6 md:gap-8 text-sm md:text-base font-medium text-slate-600">
+					<Link
+						href="/"
+						className={`transition ${pathname === "/" ? "text-emerald-900 font-semibold" : "hover:text-slate-900"}`}
+					>
 						Home
 					</Link>
-					<Link href="/projects" className="hover:text-slate-900">
+					<Link
+						href="/projects"
+						className={`transition ${pathname === "/projects" ? "text-emerald-900 font-semibold" : "hover:text-slate-900"}`}
+					>
 						Projects
 					</Link>
-					<a href="#" className="hover:text-slate-900">
-						Resume
-					</a>
-					<a href="#" className="hover:text-slate-900">
-						About
-					</a>
+				</nav>
+				<div className="flex items-center gap-3">
+					<button
+						onClick={handleContactClick}
+						className="rounded-full bg-emerald-900 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white hover:bg-emerald-800 transition cursor-pointer shadow-md shadow-emerald-200/20"
+					>
+						Contact Me
+					</button>
 				</div>
-				<button className="rounded-full bg-emerald-900 px-6 py-3 text-sm font-semibold text-white shadow-sm shadow-emerald-200/30 hover:bg-emerald-800 transition">
-					Contact Me
-				</button>
 			</div>
-		</nav>
+		</header>
 	);
 }

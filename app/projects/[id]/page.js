@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import Image from "next/image";
@@ -12,6 +12,11 @@ import AnalysisDeepDive from "@/app/components/AnalysisDeepDive";
 import CTA from "@/app/components/CTA";
 import RelatedProjects from "@/app/components/RelatedProjects";
 import Footer from "@/app/components/Footer";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectDetail() {
 	const params = useParams();
@@ -21,6 +26,7 @@ export default function ProjectDetail() {
 	const [loading, setLoading] = useState(true);
 	const [relatedProjects, setRelatedProjects] = useState([]);
 	const [projectImages, setProjectImages] = useState([]);
+	const containerRef = useRef(null);
 
 	async function fetchProject() {
 		try {
@@ -49,6 +55,7 @@ export default function ProjectDetail() {
 					.from("projects")
 					.select("*, categories(name)")
 					.neq("id", projectId)
+					.neq("visibility", "private")
 					.limit(3);
 
 				setRelatedProjects(relatedData || []);
@@ -85,9 +92,38 @@ export default function ProjectDetail() {
 			setLoading(false);
 		}
 	}
+
 	useEffect(() => {
 		fetchProject();
 	}, [projectId]);
+
+	useGSAP(() => {
+		if (project && !loading) {
+			const tl = gsap.timeline();
+
+			tl.from(".gsap-fade-in", {
+				opacity: 0,
+				y: 40,
+				duration: 0.8,
+				stagger: 0.2,
+				ease: "power3.out",
+				clearProps: "all"
+			});
+
+			gsap.utils.toArray(".gsap-scroll-trigger").forEach((el) => {
+				gsap.from(el, {
+					scrollTrigger: {
+						trigger: el,
+						start: "top 85%",
+					},
+					opacity: 0,
+					y: 50,
+					duration: 0.8,
+					ease: "power3.out",
+				});
+			});
+		}
+	}, { dependencies: [project, loading], scope: containerRef });
 
 	if (loading) {
 		return (
@@ -122,13 +158,20 @@ export default function ProjectDetail() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gray-50">
+		<div className="min-h-screen bg-gray-50" ref={containerRef}>
 			<Header variant="project" />
-			<ProjectHeader project={project} projectImages={projectImages} />
-			<ProjectOverview project={project} />
-			<AnalysisDeepDive project={project} projectImages={projectImages} />
-			<CTA variant="project" />
-			<RelatedProjects relatedProjects={relatedProjects} />
+			<div className="gsap-fade-in">
+				<ProjectHeader project={project} projectImages={projectImages} />
+			</div>
+			<div className="gsap-scroll-trigger">
+				<ProjectOverview project={project} />
+			</div>
+			<div className="gsap-scroll-trigger">
+				<AnalysisDeepDive project={project} projectImages={projectImages} />
+			</div>
+			<div className="gsap-scroll-trigger">
+				<RelatedProjects relatedProjects={relatedProjects} />
+			</div>
 			<Footer />
 		</div>
 	);

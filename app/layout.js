@@ -12,10 +12,40 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
-
 export const metadata = {
-  title: "Terra Analytics - Data Visualization & Insights",
-  description: "Visualizing Insight, Grounded in Data. Data-driven analysis and visualization services.",
+  title: "Ashraf Adel | Data Analyst",
+  description: "Visualizing Insight, Grounded in Data. Data-driven analysis and visualization services specializing in business intelligence and statistical storytelling.",
+  keywords: [
+    "Ashraf Adel",
+    "Adel Ashraf",
+    "Ashraf Adel Portfolio",
+    "Ashraf Adel Data",
+    "adel ashraf",
+    "ashraf adel data analyst",
+    "adel ashraf data analyst",
+    "ashraf adel data analyst portfolio",
+    "adel ashraf data analyst portfolio",
+    
+    "Data Analyst",
+    "Data Analysis",
+    "Data Analytics Specialist",
+    "Business Intelligence Analyst",
+    "Data Visualization Expert",
+    "Statistical Data Analysis",
+    "Insight Visualization",
+    
+    "Python Data Analysis",
+    "SQL Developer",
+    "Power BI Dashboard",
+    "Tableau Specialist",
+    "Excel Data Modeling"
+  ],
+  authors: [{ name: "Ashraf Adel" }],
+  openGraph: {
+    title: "Ashraf Adel | Data Analyst",
+    description: "Visualizing Insight, Grounded in Data.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {

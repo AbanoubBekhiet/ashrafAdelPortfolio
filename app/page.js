@@ -1,7 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { gsap } from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { supabase } from "@/lib/supabase";
+import GSAPProvider from "@/app/components/GSAPProvider";
 import Header from "@/app/components/Header";
 import Hero from "@/app/components/Hero";
 import Toolkit from "@/app/components/Toolkit";
@@ -10,9 +13,30 @@ import FeaturedProjects from "@/app/components/FeaturedProjects";
 import ContactSection from "@/app/components/ContactSection";
 import Footer from "@/app/components/Footer";
 
+gsap.registerPlugin(ScrollToPlugin);
+
 export default function Home() {
 	const [projects, setProjects] = useState([]);
 	const [loading, setLoading] = useState(true);
+
+	// Handle hash scroll (e.g. from /projects -> /#contact-section)
+	useEffect(() => {
+		const hash = window.location.hash;
+		if (hash) {
+			// Wait for DOM to render, then scroll
+			const timeout = setTimeout(() => {
+				const el = document.querySelector(hash);
+				if (el) {
+					gsap.to(window, {
+						duration: 1,
+						scrollTo: { y: hash, offsetY: 80 },
+						ease: "power3.inOut",
+					});
+				}
+			}, 500);
+			return () => clearTimeout(timeout);
+		}
+	}, []);
 
 	async function fetchProjects() {
 		try {
@@ -35,6 +59,7 @@ export default function Home() {
           )
         `,
 				)
+				.neq("visibility", "private")
 				.order("created_at", { ascending: false })
 				.limit(12);
 
@@ -70,16 +95,18 @@ export default function Home() {
 	}, []);
 
 	return (
-		<div className="min-h-screen bg-[#f7f3eb] text-slate-900">
-			<Header variant="home" />
-			<main>
-				<Hero />
-				<Toolkit />
-				<RootsGrowth />
-				<FeaturedProjects projects={projects} loading={loading} />
-				<ContactSection />
-			</main>
-			<Footer />
-		</div>
+		<GSAPProvider>
+			<div className="min-h-screen bg-[#f7f3eb] text-slate-900">
+				<Header variant="home" />
+				<main>
+					<Hero />
+					<Toolkit />
+					<RootsGrowth />
+					<FeaturedProjects projects={projects} loading={loading} />
+					<ContactSection />
+				</main>
+				<Footer />
+			</div>
+		</GSAPProvider>
 	);
 }
