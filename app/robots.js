@@ -1,12 +1,14 @@
 export default function robots() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ashrafadel.vercel.app'; // Adjust to your real domain
+  const baseUrl = 'https://ashrafadel.vercel.app';
 
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/'], 
-    },
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/api/', '/_next/'], 
+      },
+    ],
     sitemap: `${baseUrl}/sitemap.xml`,
   }
 }
