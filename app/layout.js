@@ -1,6 +1,6 @@
 import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/next"
 const playfairDisplay = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
@@ -59,6 +59,7 @@ export default function RootLayout({ children }) {
       className={`${playfairDisplay.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-white">{children}</body>
+      <Analytics/>
     </html>
   );
 }
