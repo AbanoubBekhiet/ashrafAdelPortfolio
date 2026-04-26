@@ -13,7 +13,7 @@ const inter = Inter({
   weight: ["400", "500", "600", "700"],
 });
 export const metadata = {
-  title: "Ashraf Adel | Data Analyst",
+  title: "ashraf adel | Data Analyst",
   description: "Visualizing Insight, Grounded in Data. Data-driven analysis and visualization services specializing in business intelligence and statistical storytelling.",
   keywords: [
     "Ashraf Adel",
