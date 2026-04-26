@@ -46,6 +46,9 @@ export const metadata = {
     description: "Visualizing Insight, Grounded in Data.",
     type: "website",
   },
+  verification: {
+    google: "tQMqyEQB3Q73XwZHx9spm4bfQiUcioaOaNnsJiuzKHA",
+  },
 };
 
 export default function RootLayout({ children }) {

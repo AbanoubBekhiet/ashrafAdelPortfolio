@@ -37,7 +37,7 @@ export default function Footer() {
 		>
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 text-center text-slate-600">
 				<p className="text-xs sm:text-sm mb-3 sm:mb-4">
-					TerraData Portfolio. Rooted in insights.
+					Ashraf Adel Portfolio. 
 				</p>
 				<div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
 					<a

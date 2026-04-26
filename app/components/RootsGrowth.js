@@ -85,13 +85,13 @@ export default function RootsGrowth() {
 						<div className="flex flex-col gap-3 sm:gap-4 text-slate-600 leading-6 sm:leading-7 text-sm sm:text-base">
 							<div>
 								<p className="text-slate-900 font-semibold">
-									London, United Kingdom
+									Egypt, Alexandria
 								</p>
-								<p>Faculty of Agriculture</p>
+								<p>Faculty of science</p>
 							</div>
 							<div>
 								<p className="text-slate-900 font-semibold">
-									Senior Data Analyst
+									 Data Analyst
 								</p>
 								<p>GreenTech Solutions · 2021 — Present</p>
 								<p className="text-xs sm:text-sm text-slate-500">
@@ -100,7 +100,7 @@ export default function RootsGrowth() {
 									model that improved harvest accuracy by 18%.
 								</p>
 							</div>
-							<div>
+							{/* <div>
 								<p className="text-slate-900 font-semibold">
 									B.Sc. in Agricultural Engineering
 								</p>
@@ -110,7 +110,7 @@ export default function RootsGrowth() {
 									Management. Thesis: &ldquo;The Impact of Algorithmic
 									Irrigation on Water Conservation in Arid Climates.&rdquo;
 								</p>
-							</div>
+							</div> */}
 						</div>
 					</div>
 
@@ -118,23 +118,23 @@ export default function RootsGrowth() {
 						<div className="space-y-4 sm:space-y-8">
 							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
 								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
-									Senior Data Analyst
+									 Data Analyst
 								</p>
 								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
-									GreenTech Solutions · 2021 — Present
+									FREELANCER — Present
 								</p>
 							</div>
 							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
 								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
-									B.Sc. Agricultural Engineering
+									Faculty of SCIENCE,ALEXANDRIA UNIVERSITY
 								</p>
 								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
-									Faculty of Agriculture · 2017 — 2021
+									Bachelor of Science, Botanty Department. · 2014 — 2018
 								</p>
 							</div>
 							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
 								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
-									London, United Kingdom
+									Alexandria, Egypt
 								</p>
 								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
 									Building analytics systems rooted in environmental insight and

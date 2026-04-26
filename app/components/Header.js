@@ -46,9 +46,9 @@ export default function Header({ variant = "default" }) {
 					href="/"
 					className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight"
 				>
-					TerraData
+					Ashraf Adel
 				</Link>
-				<nav className="hidden sm:flex items-center gap-6 md:gap-8 text-sm md:text-base font-medium text-slate-600">
+				<nav className="flex items-center gap-6 md:gap-8 text-sm md:text-base font-medium text-slate-600">
 					<Link
 						href="/"
 						className={`transition ${pathname === "/" ? "text-emerald-900 font-semibold" : "hover:text-slate-900"}`}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -121,7 +122,7 @@ export default function Hero() {
 				<div className="grid gap-10 sm:gap-16 lg:grid-cols-[1.1fr_0.9fr] items-center">
 					<div ref={textRef} className="space-y-5 sm:space-y-8">
 						<p className="hero-animate text-[10px] sm:text-xs uppercase tracking-[0.45em] text-slate-500 font-semibold">
-							Data Scientist & Agronomist
+							Data Analyst
 						</p>
 						<h1 className="hero-animate text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-slate-900 leading-tight">
 							Cultivating clarity from complex data.
@@ -173,14 +174,15 @@ export default function Hero() {
 					</div>
 
 					<div ref={imageRef} className="relative">
-						<div className="aspect-[4/3] w-full rounded-[2rem] sm:rounded-[3rem] bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_55%)] p-4 sm:p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.35)]">
-							<div className="h-full rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 bg-white/80 shadow-inner flex items-center justify-center">
-								<div className="text-center p-4 sm:p-8">
-									<div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📊</div>
-									<p className="text-slate-500 text-xs sm:text-sm font-medium">
-										Data Analytics Dashboard
-									</p>
-								</div>
+						<div className="aspect-[4/4] w-full rounded-[2rem] sm:rounded-[3rem] bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_55%)] p-4 sm:p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.35)]">
+							<div className="relative h-full w-full rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 bg-white/80 shadow-inner overflow-hidden">
+								<Image
+									src="/ashraf.png"
+									alt="Ashraf Adel"
+									fill
+									className="object-cover object-top"
+									priority
+								/>
 							</div>
 						</div>
 					</div>

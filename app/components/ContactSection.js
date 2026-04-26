@@ -123,7 +123,7 @@ export default function ContactSection() {
 					onClose={() => setToast({ show: false, message: "", type: "" })}
 				/>
 			)}
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 grid gap-8 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 grid gap-8 sm:gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start overflow-x-hidden">
 				<div ref={contentRef} className="rounded-[2rem] bg-white p-8 sm:p-10 shadow-[0_25px_80px_-50px_rgba(15,23,42,0.2)]">
 					<p className="text-xs sm:text-sm uppercase tracking-[0.4em] text-slate-500 mb-3 sm:mb-4">
 						Let&apos;s sow the seeds of a new project.
