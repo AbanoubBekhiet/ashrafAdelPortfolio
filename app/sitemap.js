@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
 export default async function sitemap() {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ashrafadel.com'; // Adjust to your real domain
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://ashrafadel.vercel.app'; // Adjust to your real domain
 
   // Core static routes
   const routes = [

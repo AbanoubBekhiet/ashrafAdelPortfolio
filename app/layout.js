@@ -17,6 +17,7 @@ export const metadata = {
   description: "Visualizing Insight, Grounded in Data. Data-driven analysis and visualization services specializing in business intelligence and statistical storytelling.",
   keywords: [
     "Ashraf Adel",
+    "ashraf adel",
     "Adel Ashraf",
     "Ashraf Adel Portfolio",
     "Ashraf Adel Data",
