@@ -66,13 +66,20 @@ export default function ProjectsPage() {
 
 				// Process projects to get main image
 				const processedProjects = (data || []).map((project) => {
-					const mainImage = project.project_images?.sort(
-						(a, b) => a.image_order - b.image_order,
-					)[0];
+					// Prioritize main_image_url column from the projects table
+					let imageUrl = project.main_image_url;
 
-					let imageUrl = mainImage?.image_url || project.image_url;
+					// Fallback to first image from project_images table if main_image_url is null
+					if (!imageUrl && project.project_images?.length > 0) {
+						const firstGalleryImage = [...project.project_images].sort(
+							(a, b) => a.image_order - b.image_order,
+						)[0];
+						imageUrl = firstGalleryImage.image_url;
+					}
+
+					// Construct final URL if it's a relative storage path
 					if (imageUrl && !imageUrl.startsWith("http")) {
-						const bucket = "project-images";
+						const bucket = "portfolio-assets";
 						imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${imageUrl}`;
 					}
 

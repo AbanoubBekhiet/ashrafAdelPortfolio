@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { FaHome, FaBriefcase } from "react-icons/fa";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -48,18 +49,20 @@ export default function Header({ variant = "default" }) {
 				>
 					Ashraf Adel
 				</Link>
-				<nav className="flex items-center gap-6 md:gap-8 text-sm md:text-base font-medium text-slate-600">
+				<nav className="flex items-center gap-6 md:gap-8 text-xl md:text-2xl font-medium text-slate-600">
 					<Link
 						href="/"
-						className={`transition ${pathname === "/" ? "text-emerald-900 font-semibold" : "hover:text-slate-900"}`}
+						className={`transition p-2 rounded-full hover:bg-slate-100 ${pathname === "/" ? "text-emerald-900 bg-emerald-50 shadow-sm" : "hover:text-slate-900"}`}
+						title="Home"
 					>
-						Home
+						<FaHome />
 					</Link>
 					<Link
 						href="/projects"
-						className={`transition ${pathname === "/projects" ? "text-emerald-900 font-semibold" : "hover:text-slate-900"}`}
+						className={`transition p-2 rounded-full hover:bg-slate-100 ${pathname === "/projects" ? "text-emerald-900 bg-emerald-50 shadow-sm" : "hover:text-slate-900"}`}
+						title="Projects"
 					>
-						Projects
+						<FaBriefcase />
 					</Link>
 				</nav>
 				<div className="flex items-center gap-3">

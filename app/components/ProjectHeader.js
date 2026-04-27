@@ -20,10 +20,20 @@ export default function ProjectHeader({ project, projectImages }) {
 						>
 							{project.title}
 						</h1>
-						<p className="text-gray-600 text-base sm:text-lg lg:text-xl break-words" style={{ overflowWrap: "anywhere" }}>
+						<p className="text-gray-600 text-base sm:text-lg lg:text-xl break-words mb-8" style={{ overflowWrap: "anywhere" }}>
 							{project.description ||
 								"A comprehensive analysis project demonstrating data-driven insights and impact."}
 						</p>
+
+						{project.main_image_url && (
+							<div className="rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden border border-gray-200 shadow-lg gsap-fade-in mb-4">
+								<img 
+									src={project.main_image_url} 
+									alt={project.title} 
+									className="w-full h-auto object-cover max-h-[600px] shadow-2xl transition duration-700 hover:scale-[1.02]"
+								/>
+							</div>
+						)}
 					</div>
 
 					{/* Key Performance Metrics */}

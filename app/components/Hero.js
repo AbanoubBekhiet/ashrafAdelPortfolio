@@ -15,28 +15,42 @@ export default function Hero() {
 	const imageRef = useRef(null);
 	const buttonsRef = useRef(null);
 	const [cvUrl, setCvUrl] = useState(null);
+	const [profileImage, setProfileImage] = useState("/ashraf.png");
 	const [downloading, setDownloading] = useState(false);
 
 	// Fetch CV URL from Supabase
 	useEffect(() => {
-		async function fetchCV() {
+		async function fetchHeroData() {
 			try {
 				if (!supabase) return;
-				const { data, error } = await supabase
+				
+				// Fetch CV
+				const { data: cvData, error: cvError } = await supabase
 					.from("user_cv")
 					.select("cv_url, file_name")
 					.limit(1)
 					.single();
 
-				if (error) throw error;
-				if (data) {
-					setCvUrl(data);
+				if (!cvError && cvData) {
+					setCvUrl(cvData);
+				}
+
+				// Fetch Profile Image
+				const { data: imageData, error: imageError } = await supabase
+					.from("portfolio_images")
+					.select("full_url")
+					.eq("folder_name", "profile")
+					.limit(1)
+					.single();
+
+				if (!imageError && imageData) {
+					setProfileImage(imageData.full_url);
 				}
 			} catch (err) {
-				console.error("Error fetching CV:", err);
+				console.error("Error fetching hero data:", err);
 			}
 		}
-		fetchCV();
+		fetchHeroData();
 	}, []);
 
 	// GSAP Animations
@@ -177,7 +191,7 @@ export default function Hero() {
 						<div className="aspect-[4/4] w-full rounded-[2rem] sm:rounded-[3rem] bg-[radial-gradient(circle_at_top,_rgba(16,185,129,0.12),_transparent_55%)] p-4 sm:p-8 shadow-[0_40px_120px_-60px_rgba(15,23,42,0.35)]">
 							<div className="relative h-full w-full rounded-[1.5rem] sm:rounded-[2.5rem] border border-slate-200 bg-white/80 shadow-inner overflow-hidden">
 								<Image
-									src="/ashraf.png"
+									src={profileImage}
 									alt="Ashraf Adel"
 									fill
 									className="object-cover object-top"

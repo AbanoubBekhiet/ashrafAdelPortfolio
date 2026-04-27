@@ -47,9 +47,16 @@ export default function ProjectDetail() {
 				.single();
 
 			if (projectError) throw projectError;
+			
+			// Resolve main_image_url if it's a relative storage path
+			if (projectData && projectData.main_image_url && !projectData.main_image_url.startsWith("http")) {
+				const bucket = "portfolio-assets";
+				projectData.main_image_url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${projectData.main_image_url}`;
+			}
+
 			setProject(projectData);
 
-			// Fetch related projects (limit to 3, exclude current)
+			// Fetch related data if project exists
 			if (projectData) {
 				const { data: relatedData } = await supabase
 					.from("projects")
@@ -58,7 +65,16 @@ export default function ProjectDetail() {
 					.neq("visibility", "private")
 					.limit(3);
 
-				setRelatedProjects(relatedData || []);
+				const processedRelated = (relatedData || []).map((rp) => {
+					let imageUrl = rp.main_image_url;
+					if (imageUrl && !imageUrl.startsWith("http")) {
+						const bucket = "portfolio-assets";
+						imageUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${bucket}/${imageUrl}`;
+					}
+					return { ...rp, image_url: imageUrl };
+				});
+
+				setRelatedProjects(processedRelated);
 
 				// Fetch project images
 				const { data: imagesData, error: imagesError } = await supabase

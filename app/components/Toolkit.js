@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { supabase } from "@/lib/supabase";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,37 +11,41 @@ export default function Toolkit() {
 	const sectionRef = useRef(null);
 	const titleRef = useRef(null);
 	const cardsRef = useRef(null);
-
-	const items = [
+	const staticItems = [
 		{
-			title: "Python",
+			id: "static-python",
+			name: "Python",
 			description:
 				"Advanced automation, predictive modeling, and ETL pipelines using Pandas, NumPy, and Scikit-Learn.",
 			accent: "bg-emerald-50 text-emerald-900",
 			icon: "🐍",
 		},
 		{
-			title: "SQL",
+			id: "static-sql",
+			name: "SQL",
 			description:
 				"Efficient querying and architectural design for relational databases.",
 			accent: "bg-amber-50 text-amber-900",
 			icon: "🗃️",
 		},
 		{
-			title: "Tableau",
+			id: "static-tableau",
+			name: "Tableau",
 			description: "Dynamic storytelling through interactive dashboards.",
 			accent: "bg-slate-50 text-slate-900",
 			icon: "📊",
 		},
 		{
-			title: "Power BI",
+			id: "static-powerbi",
+			name: "Power BI",
 			description:
 				"Enterprise-level data modeling and business intelligence visualization for strategic decision making.",
 			accent: "bg-slate-100 text-slate-900",
 			icon: "📈",
 		},
 		{
-			title: "Data Storytelling",
+			id: "static-storytelling",
+			name: "Data Storytelling",
 			description:
 				"Translating numbers into actionable narratives that stakeholders love.",
 			accent: "bg-emerald-950 text-white",
@@ -48,6 +53,52 @@ export default function Toolkit() {
 			icon: "📖",
 		},
 	];
+	const [skills, setSkills] = useState(staticItems);
+
+	const getSkillStyle = (name) => {
+		const lower = name.toLowerCase();
+		if (lower.includes("python"))
+			return { icon: "🐍", accent: "bg-emerald-50 text-emerald-900" };
+		if (lower.includes("sql"))
+			return { icon: "🗃️", accent: "bg-amber-50 text-amber-900" };
+		if (lower.includes("tableau"))
+			return { icon: "📊", accent: "bg-slate-50 text-slate-900" };
+		if (lower.includes("power"))
+			return { icon: "📈", accent: "bg-slate-100 text-slate-900" };
+		if (lower.includes("react"))
+			return { icon: "⚛️", accent: "bg-blue-50 text-blue-900" };
+		if (lower.includes("story") || lower.includes("narrative"))
+			return {
+				icon: "📖",
+				accent: "bg-emerald-950 text-white",
+				dark: true,
+			};
+		return { icon: "🛠️", accent: "bg-slate-50 text-slate-900" };
+	};
+
+	useEffect(() => {
+		async function fetchSkills() {
+			try {
+				if (!supabase) return;
+				const { data, error } = await supabase
+					.from("skills")
+					.select("*")
+					.order("created_at", { ascending: true });
+
+				if (error) throw error;
+				if (data) {
+					const formattedDynamicSkills = data.map((item) => ({
+						...item,
+						...getSkillStyle(item.name),
+					}));
+					setSkills([...staticItems, ...formattedDynamicSkills]);
+				}
+			} catch (err) {
+				console.error("Error fetching skills:", err);
+			}
+		}
+		fetchSkills();
+	}, []);
 
 	useEffect(() => {
 		const title = titleRef.current;
@@ -101,17 +152,20 @@ export default function Toolkit() {
 				</p>
 			</div>
 
-			<div ref={cardsRef} className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-				{items.map((item) => (
+			<div
+				ref={cardsRef}
+				className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-5"
+			>
+				{skills.map((item) => (
 					<div
-						key={item.title}
+						key={item.id}
 						className={`rounded-2xl sm:rounded-3xl border border-slate-200 p-4 sm:p-6 md:p-8 min-h-[160px] sm:min-h-[220px] transition-transform duration-300 hover:-translate-y-2 hover:shadow-lg ${item.dark ? "bg-slate-900" : "bg-white"}`}
 					>
 						<div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{item.icon}</div>
 						<div
 							className={`inline-flex rounded-full px-2 sm:px-3 py-0.5 sm:py-1 text-[10px] sm:text-xs font-semibold ${item.accent}`}
 						>
-							{item.title}
+							{item.name}
 						</div>
 						<p
 							className={`mt-3 sm:mt-6 text-xs sm:text-sm leading-5 sm:leading-7 ${item.dark ? "text-slate-100" : "text-slate-700"}`}
