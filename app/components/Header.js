@@ -47,7 +47,7 @@ export default function Header({ variant = "default" }) {
 					href="/"
 					className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight"
 				>
-					Ashraf Adel
+					Ashraf Adel Senada
 				</Link>
 				<nav className="flex items-center gap-6 md:gap-8 text-xl md:text-2xl font-medium text-slate-600">
 					<Link
