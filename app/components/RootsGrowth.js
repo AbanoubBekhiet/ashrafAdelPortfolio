@@ -13,8 +13,8 @@ export default function RootsGrowth() {
 	const rightRef = useRef(null);
 	const [experiences, setExperiences] = useState([]);
 	const [currentExp, setCurrentExp] = useState(null);
-	const [firstExp, setFirstExp] = useState(null);
 	const [education, setEducation] = useState(null);
+	const [location, setLocation] = useState(null);
 
 	useEffect(() => {
 		async function fetchData() {
@@ -32,14 +32,6 @@ export default function RootsGrowth() {
 					setExperiences(expData);
 					const current = expData.find((exp) => exp.is_current);
 					if (current) setCurrentExp(current);
-					
-					// Find the first (oldest) experience
-					if (expData.length > 0) {
-						const sortedByDate = [...expData].sort((a, b) => 
-							new Date(a.created_at) - new Date(b.created_at)
-						);
-						setFirstExp(sortedByDate[0]);
-					}
 				}
 
 				// Fetch Education
@@ -51,6 +43,17 @@ export default function RootsGrowth() {
 
 				if (!eduError && eduData) {
 					setEducation(eduData);
+				}
+
+				// Fetch Location
+				const { data: locData, error: locError } = await supabase
+					.from("locations")
+					.select("*")
+					.limit(1)
+					.single();
+
+				if (!locError && locData) {
+					setLocation(locData);
 				}
 			} catch (err) {
 				console.error("Error fetching data:", err);
@@ -160,22 +163,23 @@ export default function RootsGrowth() {
 							</div>
 							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
 								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
-									{firstExp ? firstExp.position : "Alexandria, Egypt"}
-								</p>
-								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
-									{firstExp 
-										? `${firstExp.company} · ${firstExp.duration}`
-										: "Building analytics systems rooted in environmental insight and sustainable decision-making."}
-								</p>
-							</div>
-							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
-								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
 									{education ? education.faculty_name : "Faculty of SCIENCE,ALEXANDRIA UNIVERSITY"}
 								</p>
 								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
 									{education ? `${education.degree} · ${education.duration}` : "Bachelor of Science, Botanty Department. · 2014 — 2018"}
 								</p>
 							</div>
+							<div className="roots-card rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-8 border border-slate-200 shadow-sm transition-transform duration-300 hover:-translate-y-1">
+								<p className="text-xs sm:text-sm uppercase tracking-[0.35em] text-emerald-700 mb-2 sm:mb-3">
+									{location ? location.name : "Alexandria, Egypt"}
+								</p>
+								<p className="text-slate-700 leading-6 sm:leading-7 text-sm sm:text-base">
+									{location 
+										? location.description
+										: "Building analytics systems rooted in environmental insight and sustainable decision-making."}
+								</p>
+							</div>
+							
 						</div>
 					</div>
 				</div>
