@@ -142,8 +142,7 @@ export default function Hero() {
 							Cultivating clarity from complex data.
 						</h1>
 						<p className="hero-animate max-w-2xl text-sm sm:text-base md:text-lg leading-6 sm:leading-8 text-slate-600">
-							Bridging the gap between agricultural intuition and data-driven
-							precision through advanced analytics and sustainable insights.
+							Transforming Fragmented Data into Strategic Assets: Empowering Organizations to Make High-Stakes Decisions with Confidence and Clarity.
 						</p>
 						<div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 sm:gap-4">
 							<button
